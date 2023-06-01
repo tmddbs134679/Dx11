@@ -1,6 +1,9 @@
 #include "AkGraphicDevice_Dx11.h"
 #include "AkApplication.h"
 #include "AkRenderer.h"
+#include "AkInput.h"
+#include "AkTime.h"
+
 
 extern Ak::Application application;
 
@@ -139,14 +142,7 @@ namespace Ak::graphics
 
 	bool GraphicDevice_Dx11::CreateBuffer(ID3D11Buffer** _buffer, D3D11_BUFFER_DESC* _desc, D3D11_SUBRESOURCE_DATA* _data)
 	{
-		/*D3D11_BUFFER_DESC TriangleDesc = {};
-		TriangleDesc.ByteWidth = _desc->ByteWidth;
-		TriangleDesc.BindFlags = _desc->BindFlags;
-		TriangleDesc.CPUAccessFlags = _desc->CPUAccessFlags;
-
-		D3D11_SUBRESOURCE_DATA TriangleData = {};
-		TriangleData.pSysMem = vertexes;*/
-
+		
 		if (FAILED(mDevice->CreateBuffer(_desc, _data, _buffer)))
 			return false;
 
@@ -155,7 +151,6 @@ namespace Ak::graphics
 
 	bool GraphicDevice_Dx11::CreateShader()
 	{
-		//ID3DBlob* vsBlob = nullptr;
 
 		std::filesystem::path shaderPath = std::filesystem::current_path().parent_path();
 		shaderPath += L"\\Shader_SOURCE\\";
@@ -279,11 +274,106 @@ namespace Ak::graphics
 		mContext->RSSetViewports(1, _ViewPort);
 	}
 
+	void GraphicDevice_Dx11::SetConstantBuffer(ID3D11Buffer* _buffer, void* _data, UINT _size)
+	{
+		//상수버퍼랑 subRes 매핑
+		D3D11_MAPPED_SUBRESOURCE SubRes = {};
+
+		//메모리복사
+		mContext->Map(_buffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &SubRes);
+		memcpy(SubRes.pData, _data, _size);
+		//할당 해제
+		mContext->Unmap(_buffer, 0);
+
+	}
+
+	void GraphicDevice_Dx11::BindConstantBuffer(eShaderStage _stage, eCBType _type, ID3D11Buffer* _buffer)
+	{
+		switch (_stage)
+		{
+		case eShaderStage::VS:
+			mContext->VSSetConstantBuffers((UINT)_type, 1, &_buffer);
+			break;
+		case eShaderStage::HS:
+			mContext->HSSetConstantBuffers((UINT)_type, 1, &_buffer);
+			break;
+		case eShaderStage::DS:
+			mContext->DSSetConstantBuffers((UINT)_type, 1, &_buffer);
+			break;
+		case eShaderStage::GS:
+			mContext->GSSetConstantBuffers((UINT)_type, 1, &_buffer);
+			break;
+		case eShaderStage::PS:
+			mContext->PSSetConstantBuffers((UINT)_type, 1, &_buffer);
+			break;
+		case eShaderStage::CS:
+			mContext->CSSetConstantBuffers((UINT)_type, 1, &_buffer);
+			break;
+		case eShaderStage::END:
+
+			break;
+		}
+	}
+
+	void GraphicDevice_Dx11::BindsConstantBuffer(eShaderStage _stage, eCBType _type, ID3D11Buffer* _buffer)
+	{
+			
+		mContext->VSSetConstantBuffers((UINT)_type, 1, &_buffer);
+		mContext->HSSetConstantBuffers((UINT)_type, 1, &_buffer);
+		mContext->DSSetConstantBuffers((UINT)_type, 1, &_buffer);
+		mContext->GSSetConstantBuffers((UINT)_type, 1, &_buffer);
+		mContext->PSSetConstantBuffers((UINT)_type, 1, &_buffer);
+		mContext->CSSetConstantBuffers((UINT)_type, 1, &_buffer);
+				
+	}
+
+	void GraphicDevice_Dx11::KeyInput()
+	{
+		
+		if (Input::GetKeyDown(eKeyCode::LEFT) || Input::GetKey(eKeyCode::LEFT))
+		{
+			renderer::Pos.x -= 0.6f * Time::DeltaTime();
+		}
+
+		if (Input::GetKeyDown(eKeyCode::RIGHT) || Input::GetKey(eKeyCode::RIGHT))
+		{
+			renderer::Pos.x += 0.6f * Time::DeltaTime();
+		}
+
+		if (Input::GetKeyDown(eKeyCode::UP) || Input::GetKey(eKeyCode::UP))
+		{
+			renderer::Pos.y += 0.6f * Time::DeltaTime();
+		}
+
+		if (Input::GetKeyDown(eKeyCode::DOWN) || Input::GetKey(eKeyCode::DOWN))
+		{
+			renderer::Pos.y -= 0.6f * Time::DeltaTime();
+		}
+	}
+
 	void GraphicDevice_Dx11::Draw()
 	{
 		FLOAT bgColor[4] = {0.2f, 0.2f, 0.2f, 1.f};
 		mContext->ClearRenderTargetView(mRenderTargetView.Get(), bgColor);
 		mContext->ClearDepthStencilView(mDepthStencilView.Get(), D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0.0f);
+
+		//키입력 이동
+		KeyInput();
+
+		SetConstantBuffer(renderer::TriangleConstantBuffer, &renderer::Pos, sizeof(Vector4));
+		BindConstantBuffer(eShaderStage::VS, eCBType::Transform, renderer::TriangleConstantBuffer);
+
+		//Bind VS, PS
+
+		mContext->VSSetShader(renderer::TriangleVSShader, 0, 0);
+		mContext->PSSetShader(renderer::TrianglePSShader, 0, 0);
+
+		mContext->OMSetRenderTargets(
+			1,
+			mRenderTargetView.GetAddressOf(),
+			mDepthStencilView.Get());
+
+
 
 		//viewport update
 		HWND Hwnd = application.GetHwnd();
@@ -300,27 +390,23 @@ namespace Ak::graphics
 			1.f
 		};
 		BindViewPort(&mViewPort);
-		mContext->OMSetRenderTargets(
-			1,
-			mRenderTargetView.GetAddressOf(),
-			mDepthStencilView.Get() );
 
 		//Input assembler 정점데이터 정보 지정
 		UINT vertexsize = sizeof(renderer::Vertex);
 		UINT offset = 0;
 	
 		mContext->IASetVertexBuffers(0, 1, &renderer::TriangleBuffer, &vertexsize, &offset);
+		//mContext->IASetIndexBuffer(renderer::TriangleIdxBuffer, DXGI_FORMAT_R32_UINT, 0);
+
+
 		mContext->IASetInputLayout(renderer::TriangleLayout);
 		mContext->IASetPrimitiveTopology(D3D11_PRIMITIVE_TOPOLOGY::D3D10_PRIMITIVE_TOPOLOGY_TRIANGLELIST);
 
-
-		//Bind VS, PS
-
-		mContext->VSSetShader(renderer::TriangleVSShader, 0, 0);
-		mContext->PSSetShader(renderer::TrianglePSShader, 0, 0);
+	
 
 		//Draw Render Target
-		mContext->Draw(12, 0);
+		mContext->Draw(3, 0);
+		//mContext->DrawIndexed(3, 0, 0);
 
 		//렌더 타겟에 있는 이미지를 화면에 그려준다.
 		mSwapChain->Present(0, 0);
