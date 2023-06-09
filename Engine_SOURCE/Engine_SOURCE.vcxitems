@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <MSBuildAllProjects Condition="'$(MSBuildVersion)' == '' Or '$(MSBuildVersion)' &lt; '16.0'">$(MSBuildAllProjects);$(MSBuildThisFileFullPath)</MSBuildAllProjects>
+    <HasSharedItems>true</HasSharedItems>
+    <ItemsProjectGuid>{a42718b3-89c2-4cc4-b26c-162d9c822462}</ItemsProjectGuid>
+  </PropertyGroup>
+  <ItemDefinitionGroup>
+    <ClCompile>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories);$(MSBuildThisFileDirectory)</AdditionalIncludeDirectories>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectCapability Include="SourceItemsFromImports" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)AkApplication.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)AkConstantBuffer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)AkEntity.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)AkEnums.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)AkGraphicDevice_Dx11.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)AkGraphics.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)AkInput.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)AkMesh.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)AkRenderer.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)AkResources.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)AkShader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)AkTime.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Anack_Engine.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)AkMath.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)Commoninclude.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)AkResource.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)AkApplication.cpp">
+      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">stdcpp17</LanguageStandard>
+      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">stdcpp17</LanguageStandard>
+      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Release|x64'">stdcpp17</LanguageStandard>
+      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdcpp17</LanguageStandard>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)AkConstantBuffer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)AkEntity.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)AkGraphicDevice_Dx11.cpp">
+      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">stdcpp17</LanguageStandard>
+      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">stdcpp17</LanguageStandard>
+      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Release|x64'">stdcpp17</LanguageStandard>
+      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdcpp17</LanguageStandard>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)AkInput.cpp">
+      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">stdcpp17</LanguageStandard>
+      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">stdcpp17</LanguageStandard>
+      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Release|x64'">stdcpp17</LanguageStandard>
+      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdcpp17</LanguageStandard>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)AkMath.cpp">
+      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">stdcpp17</LanguageStandard>
+      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">stdcpp17</LanguageStandard>
+      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Release|x64'">stdcpp17</LanguageStandard>
+      <LanguageStandard Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">stdcpp17</LanguageStandard>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)AkMesh.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)AkRenderer.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)AkResources.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)AkShader.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)AkTime.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)AkResource.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)AkMath.inl" />
+  </ItemGroup>
+</Project>

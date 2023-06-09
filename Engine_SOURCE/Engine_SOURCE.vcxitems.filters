@@ -1,0 +1,117 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Common">
+      <UniqueIdentifier>{a1770f91-01fb-4235-9874-5a913862703d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Graphics">
+      <UniqueIdentifier>{a00284c3-1fb0-4668-bccd-41c87b7c750d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Input">
+      <UniqueIdentifier>{577624ba-10a3-475e-a454-2116f2c04299}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="LevelInterface">
+      <UniqueIdentifier>{c54e0d19-7a63-4b5e-9411-beed535ca8d8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource">
+      <UniqueIdentifier>{93e4bb9c-defc-4ecd-a3da-60962e32181e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Entity">
+      <UniqueIdentifier>{76e74057-e505-40ab-9eb3-478a0a30af68}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Time">
+      <UniqueIdentifier>{ae7d6a63-ab91-4100-b7ec-0623fbc19828}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Common\Math">
+      <UniqueIdentifier>{95b61507-b00a-4d0e-bf2b-e5981099271f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource\Resources">
+      <UniqueIdentifier>{3c3c4d7c-d93a-40f3-b1c4-9d4ca3804f72}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)AkEntity.h">
+      <Filter>Common\Entity</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Anack_Engine.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)AkMath.h">
+      <Filter>Common\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)AkTime.h">
+      <Filter>Common\Time</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)Commoninclude.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)AkEnums.h">
+      <Filter>Common</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)AkGraphics.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)AkGraphicDevice_Dx11.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)AkApplication.h">
+      <Filter>LevelInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)AkInput.h">
+      <Filter>Input</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)AkResource.h">
+      <Filter>Resource</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)AkRenderer.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)AkResources.h">
+      <Filter>Resource\Resources</Filter>
+    </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)AkShader.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)AkMesh.h" />
+    <ClInclude Include="$(MSBuildThisFileDirectory)AkConstantBuffer.h">
+      <Filter>Graphics</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="$(MSBuildThisFileDirectory)AkEntity.cpp">
+      <Filter>Common\Entity</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)AkMath.cpp">
+      <Filter>Common\Math</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)AkTime.cpp">
+      <Filter>Common\Time</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)AkGraphicDevice_Dx11.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)AkApplication.cpp">
+      <Filter>LevelInterface</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)AkInput.cpp">
+      <Filter>Input</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)AkResource.cpp">
+      <Filter>Resource</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)AkRenderer.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)AkResources.cpp">
+      <Filter>Resource\Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="$(MSBuildThisFileDirectory)AkShader.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)AkMesh.cpp" />
+    <ClCompile Include="$(MSBuildThisFileDirectory)AkConstantBuffer.cpp">
+      <Filter>Graphics</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)AkMath.inl">
+      <Filter>Common\Math</Filter>
+    </None>
+  </ItemGroup>
+</Project>
